@@ -1,4 +1,5 @@
 <script>
+	import '../app.css';
 	import { onMount } from 'svelte';
 	// import Default from "../layouts/Default.svelte";
 	import { page } from '$app/stores';
