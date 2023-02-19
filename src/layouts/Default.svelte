@@ -8,6 +8,6 @@
 	</main>
 
 	<footer>
-		<p>Copyright Notife</p>
+		<p>Copyright Gridup</p>
 	</footer>
 </div>
