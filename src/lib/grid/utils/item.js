@@ -77,9 +77,9 @@ function updateItem(elements, active, position, col) {
  * @param {any} active
  * @param {any[]} items
  * @param {number} cols
- * @param {any} original
+ * @param {any} original // fixme
  */
-export function moveItemsAroundItem(active, items, cols, original) {
+export function moveItemsAroundItem(active, items, cols) {
 	// Get current item from the breakpoint
 	const activeItem = getItem(active, cols);
 	const ids = items
@@ -128,9 +128,9 @@ export function moveItemsAroundItem(active, items, cols, original) {
  * @param {any} active
  * @param {any[]} items
  * @param {number} cols
- * @param {any} original
+ * @param {any} original //fixme
  */
-export function moveItem(active, items, cols, original) {
+export function moveItem(active, items, cols) {
 	// Get current item from the breakpoint
 	const item = getItem(active, cols);
 
@@ -241,9 +241,9 @@ export function adjust(items, col) {
 /**
  * @param {any[]} items
  * @param {string | number} col
- * @param {any} breakpoints
+ * @param {any} breakpoints // fixme
  */
-export function getUndefinedItems(items, col, breakpoints) {
+export function getUndefinedItems(items, col) {
 	return items
 		.map((/** @type {{ [x: string]: any; id: any; }} */ value) => {
 			if (!value[col]) {
@@ -261,7 +261,7 @@ export function getUndefinedItems(items, col, breakpoints) {
  */
 export function getClosestColumn(items, item, col, breakpoints) {
 	return breakpoints
-		.map(([_, column]) => item[column] && column)
+		.map(([column]) => item[column] && column)
 		.filter(Boolean)
 		.reduce(function (/** @type {number} */ acc, /** @type {number} */ value) {
 			/** @type {boolean} */

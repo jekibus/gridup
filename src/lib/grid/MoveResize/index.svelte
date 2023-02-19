@@ -89,7 +89,7 @@
 
 	const getContainerFrame = (element) => {
 		if (element === document.documentElement || !element) {
-			const { height, top, right, bottom, left } = nativeContainer.getBoundingClientRect();
+			const { top, bottom } = nativeContainer.getBoundingClientRect();
 
 			return {
 				top: Math.max(0, top),
@@ -189,7 +189,7 @@
 		}
 	};
 
-	const pointerup = (e) => {
+	const pointerup = () => {
 		stopAutoscroll();
 
 		window.removeEventListener('pointerdown', pointerdown);

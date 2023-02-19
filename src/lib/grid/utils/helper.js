@@ -30,7 +30,6 @@ const gridHelp = {
 	 * @param {any} col
 	 */
 	normalize(items, col) {
-		const rows = getRowsCount(items, col);
 		return normalize(items, col);
 	},
 

@@ -6,12 +6,10 @@
 		moveItemsAroundItem,
 		moveItem,
 		getItemById,
-		specifyUndefinedColumns,
-		findFreeSpaceForItem
+		specifyUndefinedColumns
 	} from './utils/item.js';
 	import { onMount, createEventDispatcher } from 'svelte';
-	import { getColumn, getRowsCount, throttle } from './utils/other.js';
-	import { makeMatrixFromItems } from './utils/matrix.js';
+	import { getColumn, throttle } from './utils/other.js';
 	import MoveResize from './MoveResize/index.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -36,8 +34,6 @@
 
 	let xPerPx = 0;
 	let yPerPx = rowHeight;
-
-	let documentWidth;
 
 	let containerWidth;
 
