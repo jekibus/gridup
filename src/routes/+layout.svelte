@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	// import Default from "../layouts/Default.svelte";
-
+	import { page } from '$app/stores';
 	/**
 	 * @type {typeof import("../layouts/Default.svelte").default | null}
 	 */
@@ -14,7 +14,9 @@
 	});
 </script>
 
-{#if renderLayout}
+{#if $page.url.pathname === '/builder'}
+	<slot />
+{:else if renderLayout}
 	<svelte:component this={renderLayout}>
 		<slot />
 	</svelte:component>

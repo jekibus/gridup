@@ -13,3 +13,4 @@
 </span>
 <h1>Welcome to Notife</h1>
 <p>The best application to design your web application</p>
+<a href="/builder">Go to builder</a>
