@@ -1,8 +1,13 @@
 <script>
 	import Grid from '$lib/grid/index.svelte';
 	import gridHelp from '$lib/grid/utils/helper';
+	import { getContext } from 'svelte';
 
-	const id = () => '_' + Math.random().toString(36).substr(2, 9);
+	const id = () => Math.round(Math.random() * 1000);
+
+	const setListener = getContext('setListener');
+
+	setListener('page', listener);
 
 	let items = [
 		{
@@ -28,6 +33,8 @@
 		}
 	];
 
+	// let items = JSON.parse(`[{"12":{"fixed":false,"resizable":true,"draggable":true,"customDragger":false,"customResizer":false,"min":{"w":1,"h":1},"max":{},"x":0,"y":0,"w":2,"h":2},"render":"testing","id":948},{"12":{"fixed":false,"resizable":true,"draggable":true,"customDragger":false,"customResizer":false,"min":{"w":1,"h":1},"max":{},"x":2,"y":0,"w":2,"h":1},"id":865}]`)
+
 	const cols = [[1100, 12]];
 
 	/**
@@ -43,6 +50,30 @@
 		const p = (await import(`../../../widgets/${path}.svelte`)).default;
 		paths[path] = p;
 		return p;
+	}
+
+	/**
+	 * @param {object} options
+	 */
+	function buildGrid(options) {
+		const ser = JSON.stringify(items);
+		console.log(ser);
+		console.log(options);
+	}
+
+	/**
+	 * @param {string} cmd
+	 * @param {object} data
+	 */
+	function listener(cmd, data) {
+		switch (cmd) {
+			case 'build':
+				buildGrid(data);
+				break;
+
+			default:
+				break;
+		}
 	}
 </script>
 
