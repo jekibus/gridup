@@ -1,0 +1,75 @@
+{
+	"name": "home",
+	"grid": {
+		"cols": [
+			[
+				1100,
+				12
+			]
+		],
+		"items": [
+			{
+				"12": {
+					"fixed": false,
+					"resizable": true,
+					"draggable": true,
+					"customDragger": false,
+					"customResizer": false,
+					"min": {
+						"w": 1,
+						"h": 1
+					},
+					"max": {},
+					"x": 4,
+					"y": 0,
+					"w": 3,
+					"h": 5,
+					"id": 838
+				},
+				"render": "widget/testing",
+				"id": 838
+			},
+			{
+				"12": {
+					"fixed": false,
+					"resizable": true,
+					"draggable": true,
+					"customDragger": false,
+					"customResizer": false,
+					"min": {
+						"w": 1,
+						"h": 1
+					},
+					"max": {},
+					"x": 0,
+					"y": 0,
+					"w": 4,
+					"h": 5,
+					"id": 675
+				},
+				"render": "widget/welcome",
+				"id": 675
+			},
+			{
+				"12": {
+					"fixed": false,
+					"resizable": true,
+					"draggable": true,
+					"customDragger": true,
+					"customResizer": false,
+					"min": {
+						"w": 1,
+						"h": 1
+					},
+					"max": {},
+					"w": 2,
+					"h": 1,
+					"x": 7,
+					"y": 0
+				},
+				"render": "tag/button",
+				"id": 639
+			}
+		]
+	}
+}

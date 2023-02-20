@@ -1,1 +1,1 @@
-<p class="text-center">Copyright Gridup Builder</p>
+<p class="text-center fixed bottom-0 w-full">Copyright Gridup Builder</p>

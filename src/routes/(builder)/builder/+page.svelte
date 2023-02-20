@@ -1,41 +1,28 @@
 <script>
 	import Grid from '$lib/grid/index.svelte';
+	import home from '../../../pages/home.json';
+	import { getContext, onMount } from 'svelte';
 	import gridHelp from '$lib/grid/utils/helper';
-	import { getContext } from 'svelte';
 
-	const id = () => Math.round(Math.random() * 1000);
+	
+
+	/**
+	 * @type {any}
+	 */
+	let items;
+	/**
+	 * @type {any}
+	 */
+	let cols;
 
 	const setListener = getContext('setListener');
 
 	setListener('page', listener);
 
-	let items = [
-		{
-			12: gridHelp.item({
-				x: 0,
-				y: 0,
-				w: 2,
-				h: 2,
-				draggable: true
-			}),
-			render: 'testing',
-			id: id()
-		},
-
-		{
-			12: gridHelp.item({
-				x: 2,
-				y: 0,
-				w: 2,
-				h: 1
-			}),
-			id: id()
-		}
-	];
-
-	// let items = JSON.parse(`[{"12":{"fixed":false,"resizable":true,"draggable":true,"customDragger":false,"customResizer":false,"min":{"w":1,"h":1},"max":{},"x":0,"y":0,"w":2,"h":2},"render":"testing","id":948},{"12":{"fixed":false,"resizable":true,"draggable":true,"customDragger":false,"customResizer":false,"min":{"w":1,"h":1},"max":{},"x":2,"y":0,"w":2,"h":1},"id":865}]`)
-
-	const cols = [[1100, 12]];
+	onMount(() => {
+		items = home?.grid?.items;
+		cols = home?.grid?.cols;
+	})
 
 	/**
 	 * @type {{ [x: string]: any; }}
@@ -46,8 +33,10 @@
 	 * @param {string} path
 	 */
 	async function renderItem(path) {
-		if (paths[path]) return paths[path];
-		const p = (await import(`../../../widgets/${path}.svelte`)).default;
+		const pathKey = path.replace(/\//g, '_')
+		if (paths[pathKey]) return paths[pathKey];
+		path = `../../../${path}.svelte`
+		const p = (await import(path)).default;
 		paths[path] = p;
 		return p;
 	}
@@ -70,21 +59,74 @@
 			case 'build':
 				buildGrid(data);
 				break;
-
+			case 'add_grid':
+				add();
+				break;
 			default:
 				break;
 		}
 	}
+
+	function id() {
+		return Math.round(Math.random()*1000);
+	}
+
+	function add() {
+		const c = 12;
+		/** @type {any} */
+		let newItem = {
+			[c]: gridHelp.item({
+				w: 1,
+				h: 1,
+				x: 0,
+				y: 0,
+				customDragger: true,
+			}),
+			render: "tag/button",
+			id: id(),
+		};
+
+		let findOutPosition = gridHelp.findSpace(newItem, items, c);
+
+		newItem = {
+			...newItem,
+			[c]: {
+				...newItem[c],
+				...findOutPosition,
+			},
+		};
+
+		items = [...items, ...[newItem]];
+	}
+
+	/**
+	 * @param {any} item
+	 */
+	function remove (item) {
+		items = items.filter((/** @type {{ id: any; }} */ value) => value.id !== item.id);
+	};
 </script>
 
-<a href="/">Back</a>
 <div class="demo-container">
-	<Grid bind:items rowHeight={50} let:item let:dataItem {cols} fastStart={true}>
+	{#if items && cols}
+	<Grid bind:items rowHeight={62} let:item let:dataItem {cols} fastStart={true}  let:movePointerDown>
+		<button class="absolute top-0 left-0 z-50 px-2 border border-dashed border-transparent text-transparent hover:text-gray-600 hover:border-gray-600 hover:bg-white rounded-full" on:pointerdown={e => e.stopPropagation()}
+			on:click={() => remove(dataItem)}
+			>
+			✕
+		</button>
+		{#if item.customDragger}
+		<button class="absolute top-0 right-0 z-50 px-2 border border-dashed border-transparent text-transparent hover:text-gray-600 hover:border-gray-600 hover:bg-white rounded-full" on:pointerdown={movePointerDown}
+			>
+			<span class="relative font-extrabold" style="top: -2px">&#8759;</span>
+		</button>
+		{/if}
 		{#if dataItem.render}
 			{#await renderItem(dataItem.render) then Module}
 				<Module />
 			{/await}
 		{/if}
-		<div class="demo-widget">{dataItem.id}</div>
+		<!-- <div class="demo-widget">{dataItem.id}</div> -->
 	</Grid>
+	{/if}
 </div>
